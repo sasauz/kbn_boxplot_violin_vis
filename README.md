@@ -11,7 +11,7 @@ If you really liked this and feel like making a donation : <a href="https://www.
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" alt="Contribute!" />
 </a>
 
-![Screenshot](screenshot1.png)
+![Screenshot](screenshot.png)
 
 ##Installation Steps
 
