@@ -50,7 +50,7 @@ define(function (require) {
 
 			function addBoxPlot(svg, results, height, width, domain, boxPlotWidth, boxColor, boxInsideColor) {
 
-				var y = d3.scale.linear().range([height - margin.bottom, margin.top]).domain(domain);
+				var y = d3.scale.linear().range([height, 0]).domain(domain);
 
 				var x = d3.scale.linear().range([0, width]);
 
@@ -107,10 +107,7 @@ define(function (require) {
 
 			var width = 600;
 			var height = 200;
-			var boxWidth = ($scope.vis.params.boxWidth ? $scope.vis.params.boxWidth : 50);
-
-            if (boxWidth > 200) boxWidth = 200; // upper Max
-            if (boxWidth < 10) boxWidth = 10; // lower Max
+			var boxWidth = 30;
 
 			var boxSpacing = 10;
 			var domain = [-10, 10];
@@ -124,13 +121,15 @@ define(function (require) {
 				var results = root.data;
 				boxSpacing = 3;
 
+                boxWidth = $scope.vis.params.boxWidth ? parseInt($scope.vis.params.boxWidth) : 50;
+
                 if ($scope.vis.params.inferDomain) {
 					domain = [root.min_value, root.max_value];
 				}
 				else{
 
-					domain = [ $scope.vis.params.domainLower ? $scope.vis.params.domainLower : -10,
-								$scope.vis.params.domainUpper ? $scope.vis.params.domainUpper : 10];
+					domain = [ $scope.vis.params.domainLower ? parseInt($scope.vis.params.domainLower) : -10,
+								$scope.vis.params.domainUpper ? parseInt($scope.vis.params.domainUpper) : 10];
 				}
 
 				y = d3.scale.linear().range([height - margin.bottom, margin.top]).domain(domain);
@@ -162,8 +161,8 @@ define(function (require) {
 
 					var g = svg.append("g").attr("transform", "translate(" + (i * (boxWidth + boxSpacing) + margin.left) + ",0)");
 
-					addViolin(g, results[i], height, boxWidth, domain, 0.25, "#cccccc");
-					addBoxPlot(g, results[i], height, boxWidth, domain, .15, $scope.vis.params.boxColor ? $scope.vis.params.boxColor : "black", "white");
+					if( $scope.vis.params.showViolin ) addViolin(g, results[i], height, boxWidth, domain, 0.25, "#cccccc");
+					if( $scope.vis.params.showBoxPlot ) addBoxPlot(g, results[i], height, boxWidth, domain, .15, $scope.vis.params.boxColor ? $scope.vis.params.boxColor : "black", "white");
 				}
 
 				svg.append("g").attr('class', 'axis').attr("transform", "translate(" + margin.left + ",0)").call(yAxis).selectAll("*").style("stroke", $scope.vis.params.yAxisLineColor ? $scope.vis.params.yAxisLineColor : "black").style("text", $scope.vis.params.yAxisTextColor ? $scope.vis.params.yAxisTextColor : "black");
