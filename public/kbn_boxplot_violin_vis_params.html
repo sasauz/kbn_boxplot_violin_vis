@@ -7,16 +7,6 @@
     <input type="checkbox" ng-model="vis.params.showViolin" ng-checked="true" class="ng-pristine ng-valid ng-touched">
 </div>
 <div class="form-group">
-    <label>json Labels</label>
-    <label>A label for each boxplot. <br /><br />Example : <br/>
-<pre style="height:100px;width:320px">
-[
-  { "text" : "CUENTA" }
-]
-</pre>
-</label>
-    <textarea rows="20" ng-model="vis.params.jsonLabels" class="form-control"></textarea>
-<div class="form-group">
     <label>Show Percentage</label>
     <input type="checkbox" ng-model="vis.params.showPercentage" class="ng-pristine ng-valid ng-touched">
 </div>
@@ -57,3 +47,13 @@
     <label>Y Axis Domain (Upper Bound)</label>
     <input type="text" ng-model="vis.params.domainUpper" class="ng-pristine ng-valid ng-touched">
 </div>
+<div class="form-group">
+    <label>json Labels</label>
+    <label>A label for each boxplot. <br /><br />Example : <br/>
+<pre style="height:50px;width:320px">
+[
+  { "text" : "CUENTA" }
+]
+</pre>
+</label>
+    <textarea rows="5" ng-model="vis.params.jsonLabels" class="form-control"></textarea>
