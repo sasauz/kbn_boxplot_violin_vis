@@ -64,7 +64,13 @@ define(function (require) {
 					probs[i]=y(d3.quantile(results.results, probs[i]))
 				}
 
-				svg.append("rect").attr("class", "boxplot fill").attr("x", x(left)).attr("width", x(right) - x(left)).attr("y", probs[3]).attr("height", -probs[3] + probs[1]).style("fill", boxColor);
+				svg.append("rect")
+                    .attr("class", "boxplot fill")
+                    .attr("x", x(left))
+                    .attr("width", x(right) - x(left))
+                    .attr("y", probs[3])
+                    .attr("height", -probs[3] + probs[1])
+                    .style("fill", boxColor);
 
 				var iS = [0, 2, 4];
 				var iSclass = ["", "median", ""];
@@ -72,7 +78,15 @@ define(function (require) {
 				var iSColor = [boxColor, boxInsideColor, boxColor];
 
 				for (var i = 0; i < iS.length; i++) {
-					svg.append("line").attr("class", "boxplot " + iSclass[i]).attr("x1", x(left)).attr("x2", x(right)).attr("y1", probs[iS[i]]).attr("y2", probs[iS[i]]).style("fill", iSColor[i]).style("stroke", iSColor[i]);
+
+                    svg.append("line")
+                        .attr("class", "boxplot " + iSclass[i])
+                        .attr("x1", x(left))
+                        .attr("x2", x(right))
+                        .attr("y1", probs[iS[i]])
+                        .attr("y2", probs[iS[i]])
+                        .style("fill", iSColor[i])
+                        .style("stroke", iSColor[i]);
 
 					var number_value = parseFloat(Math.round(probs[iS[i]] * 100) / 100).toFixed(2);
 
@@ -89,7 +103,21 @@ define(function (require) {
 					if (valueLegend != "") {
 						svg.append("text").attr("x", x(left) + 30).attr("y", probs[iS[i]]).attr("dy", ".32em").text(valueLegend);
 					}
+
+                    // Label at bottom
+                    svg.append("text")
+                        .attr("x", (x(right) - x(left)) / 2 + x(right) - 50)
+                        .attr("y", y(domain[0]) + 50)
+                        .attr("dy", ".32em")
+                        .text(results.textLabel);
 				}
+
+                // Label at bottom
+				svg.append("text").attr("class", "textLabel").attr("y", probs[iS[0]] + 20).attr("dy", ".32em").text(results.textLabel);
+
+				var width = svg.select(".textLabel")[0][0].getBoundingClientRect().width;
+
+				svg.select(".textLabel").attr("x", (x(left) + (x(right) - x(left))) - (width / 2));
 
 				var iS = [[0, 1], [3, 4]];
 				for (var i = 0; i < iS.length; i++) {
@@ -170,7 +198,7 @@ define(function (require) {
 
 			var _render = function _render(data) {
 				// Cleanning
-				d3.select('[role="boxplot1"]').selectAll('g').remove();
+				d3.select(svgRoot).select('[role="boxplot1"]').selectAll('g').remove();
 
 				_buildVis(data);
 			};

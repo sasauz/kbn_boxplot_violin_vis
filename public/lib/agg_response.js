@@ -27,6 +27,16 @@ define(function (require) {
 
         var id_aggregation = children[1].id;
 
+        var labels = null;
+
+        try {
+            labels = JSON.parse(vis.params.jsonLabels); //[ { 'text' : 'CUENTA'} ]
+        } catch (e) {
+            labels = "";
+        }
+
+        var pos = 0;
+
         var aggs = [];
         _.each(aggData.buckets, function (d, i) {
 
@@ -63,8 +73,16 @@ define(function (require) {
                 }
             }
 
-            nodes.push({ 'boxplot_key' : d.key, 'results' : results });
+            var textLabel = d.key;
 
+            if (labels.length > pos)
+            {
+                textLabel = (labels[pos].text ? labels[pos].text : textLabel);
+            }
+
+            nodes.push({ 'boxplot_key' : d.key, 'textLabel' : textLabel, 'results' : results });
+
+            pos++;
         });
 
         var chart = {
