@@ -105,11 +105,17 @@ define(function (require) {
 					}
 
                     // Label at bottom
-                    svg.append("text")
-                        .attr("x", (x(right) - x(left)) / 2 + x(right) - 50)
-                        .attr("y", y(domain[0]) + 50)
-                        .attr("dy", ".32em")
-                        .text(results.textLabel);
+					svg.append("text").attr("class", "textLabel").attr("dy", ".32em")
+						.text(results.textLabel);
+
+
+					var coord = svg.select(".textLabel")[0][0].getBoundingClientRect();
+					var width = coord.width;
+
+					svg.select(".textLabel")
+						.attr("y", (-coord.height - 20))
+						.attr("y", (-coord.width - 20))
+						.attr("transform", "rotate(90,0,0)");
 				}
 
                 // Label at bottom
